@@ -16,6 +16,8 @@ let button = document.querySelector("[type='button']");
 let rounds = document.querySelector("#rounds");
 let playerOneWins = document.querySelector("#p1wins");
 let playerTwoWins = document.querySelector("#p2wins");
+let result = document.querySelector("#result");
+let resultContainer = document.querySelector("#result-container");
 
 //
 const BulletIntensity = () => {
@@ -115,6 +117,12 @@ times = 1;
 button.addEventListener("click", () => {
   if (game.rounds >= 3) {
     console.log("The Game has ended");
+
+    // if (game.playerOne.wins > game.playerTwo.wins) {
+    //   result.innerText = "Player One won the match";
+    // } else {
+    //   result.innerText = "Player Two won the match";
+    // }
     return;
   } else {
     game.rounds += 1;
@@ -125,11 +133,22 @@ button.addEventListener("click", () => {
 
     while (game.playerOne.health >= 0 && game.playerTwo.health >= 0) {
       startRound();
-      updateUI();
     }
 
     // STEP 1: check the winner
     roundWinner();
+
+    updateUI();
+
+    if (game.rounds === 3) {
+      if (game.playerOne.wins > game.playerTwo.wins) {
+        resultContainer.style.display = "grid";
+        result.innerText = "Player One won the match";
+      } else {
+        resultContainer.style.display = "grid";
+        result.innerText = "Player Two won the match";
+      }
+    }
 
     // STEP 2: Reset the health
     game.playerOne.health = 100;
